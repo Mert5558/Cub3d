@@ -6,7 +6,7 @@
 #    By: merdal <merdal@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/06 11:49:16 by amecani           #+#    #+#              #
-#    Updated: 2024/12/17 14:25:19 by merdal           ###   ########.fr        #
+#    Updated: 2024/12/19 11:47:05 by merdal           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ MLX_FLAGS = -ldl -lglfw -pthread -lm
 LIBFT = includes/libft/libft.a
 GNL = includes/GetNextLine/GNL.a
 
-SRCS = src/main.c src/parser.c src/parser_file.c\
+SRCS = src/main.c src/parsing/parser.c src/parsing/parser_file.c src/parsing/parser_color.c src/parsing/parser_map.c\
 	#    scrs/
 
 OBJS = $(SRCS:.c=.o)

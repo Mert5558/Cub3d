@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:49:47 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/18 15:07:59 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/20 11:27:36 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,11 @@ void	file_info(t_game *game, char **file)
 		else if (ft_strncmp(file[i], "F", 1) == 0
 			|| ft_strncmp(file[i], "C", 1) == 0)
 			get_color(game, file[i]);
+		else if (check_map(file[i]))
+		{
+			game->map = get_map(file, i);
+			break ;
+		}
 		i++;
 	}
 }

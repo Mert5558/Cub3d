@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 13:58:03 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/18 16:14:24 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/19 12:22:08 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@ int	validate_color(int *color_values)
 {
 	int	i;
 
-	i = 0;
-	while (color_values[i])
-		i++;
-	if (i > 3)
-		return (-1);
 	i = 0;
 	while (i < 3)
 	{
@@ -41,7 +36,7 @@ int	parse_color(char *str, t_rgba *color)
 	
 	i = 0;
 	color_index = 0;
-	while(str[i] && color_index < 3)
+	while(str[i])
 	{
 		if (ft_isdigit(str[i]))
 		{
@@ -49,7 +44,13 @@ int	parse_color(char *str, t_rgba *color)
 			while (ft_isdigit(str[j]))
 				j++;
 			temp = ft_substr(str, i, j - i);
-			color_values[color_index++] = ft_atoi(temp);
+			if (color_index < 3)
+				color_values[color_index++] = ft_atoi(temp);
+			else
+			{
+				free(temp);
+				return (-1);
+			}
 			free(temp);
 			i = j;
 		}
@@ -58,7 +59,7 @@ int	parse_color(char *str, t_rgba *color)
 		else
 			i++;
 	}
-	if (color_index != 3 || validate_color(color_values))
+	if (color_index != 3 || validate_color(color_values) == -1)
 		return (-1);
 	color->r = (u_int16_t)color_values[0];
 	color->g = (u_int16_t)color_values[1];
