@@ -6,7 +6,7 @@
 #    By: merdal <merdal@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/06 11:49:16 by amecani           #+#    #+#              #
-#    Updated: 2024/12/19 11:47:05 by merdal           ###   ########.fr        #
+#    Updated: 2024/12/20 15:54:42 by merdal           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ LIBFT = includes/libft/libft.a
 GNL = includes/GetNextLine/GNL.a
 
 SRCS = src/main.c src/parsing/parser.c src/parsing/parser_file.c src/parsing/parser_color.c src/parsing/parser_map.c\
-	#    scrs/
+	   src/excecuiton/beninging.c\
+	   src/excecuiton/loops.c
 
 OBJS = $(SRCS:.c=.o)
 

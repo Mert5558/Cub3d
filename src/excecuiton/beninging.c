@@ -6,30 +6,36 @@
 /*   By: amecani <amecani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 15:06:35 by amecani           #+#    #+#             */
-/*   Updated: 2024/12/15 15:24:15 by amecani          ###   ########.fr       */
+/*   Updated: 2024/12/20 12:31:23 by amecani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
-
-t_exec	*gathering_addition_data(t_exec *info)
+void	gathering_addition_data(t_exec *exec_data)
 {
 	putting_wasll_manuanylly(exec_data);
-	int floor_color = get_rgba(127,127,127, 255); //Store these two in a struct
-	int celing_color = get_rgba(0,127,127, 255);
-	paint_floor_and_celing(window, floor_color, celing_color);
-	watchu_lookin_at_mane()//  * Add 
-	
+	exec_data->floor_colour = get_rgba(127,127,127, 255);
+	exec_data->celeing_colour = get_rgba(0,127,127, 255);
+	// watchu_lookin_at_mane()//  * Add 
 }
-void execution(void)
+
+void	excecution(void)
 {
-	t_exec	*exec_data	= ft_bzero(exec_data, sizeof(exec_data));
-	mlx_t	*window		= mlx_init(WIDTH, HEIGHT, "Cub3D", true); //! Add later, potential error
+	t_exec	exec_data;
+
+	ft_bzero(&exec_data, sizeof(t_exec)); //* If Failed, Stop Return Error Msg
+	exec_data.window = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
+	if (!exec_data.window)
+	{
+		printf("mlx_init initiliasation error\n");
+		free (&exec_data);
+		return;
+	}
 
 	// Single Ran / Non-Loops
-	exec_data = gathering_addition_data();
+	gathering_addition_data(&exec_data);
 
 	// Loops
-	loops_in_here(window);
+	loops_in_here(&exec_data);
 }

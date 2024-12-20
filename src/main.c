@@ -6,15 +6,14 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:46:26 by amecani           #+#    #+#             */
-/*   Updated: 2024/12/20 14:37:24 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/20 16:04:57 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../includes/cub3d.h"
 
-#define WIDTH 800
-#define HEIGHT 600
+
 
 int	get_rgba(int r, int g, int b, int a)
 {
@@ -32,10 +31,11 @@ void	paint_floor_and_celing(mlx_t *window, int f_c, int c_c)
 	uint32_t x;
 	uint32_t y;
 	mlx_image_t	*img;
+	int		half_heigh = HEIGHT / 2;
 
 	img = mlx_new_image(window, WIDTH, HEIGHT);
 	y = 0;
-	while (y < HEIGHT / 2)
+	while ((int)y < half_heigh)
 	{
 		x = 0;
 		while (x < WIDTH)
@@ -51,18 +51,28 @@ void	paint_floor_and_celing(mlx_t *window, int f_c, int c_c)
 	}
 	mlx_image_to_window(window, img, 0, 0);
 }
+
 void	putting_wasll_manuanylly(t_exec *exec_data)
 {
-	exec_data->wall[0] = mlx_load_png("texutres/pentagon_wall.png");
-	exec_data->wall[1] = mlx_load_png("texutres/pentagon_wall.png");
-	exec_data->wall[2] = mlx_load_png("texutres/pentagon_wall.png");
-	exec_data->wall[3] = mlx_load_png("texutres/pentagon_wall.png");
+	int i = 0;
+	if (			(exec_data->wall[0] = mlx_load_png("texutres/pentagon_wall.png")))
+		i++;
+	if (i == 1	&&	(exec_data->wall[1] = mlx_load_png("texutres/pentagon_wall.png")))
+		i++;
+	if (i == 2	&&	(exec_data->wall[2] = mlx_load_png("texutres/pentagon_wall.png")))
+		i++;
+	if (i == 3	&&	(exec_data->wall[3] = mlx_load_png("texutres/pentagon_wall.png")))
+		i++;
+
+	if (i++ != 4)
+	{
+		if (i == 1)
+			return;
+		while (--i != -1)
+			mlx_delete_texture(exec_data->wall[i]);
+	}
 }
 
-void loops_in_here(mlx_t *window)
-{
-	mlx_loop(window);
-}
 
 int main (int argc, char **argv)
 {
@@ -74,9 +84,8 @@ int main (int argc, char **argv)
 		exit(1);
 	}
 	parser(&game, argv[1]);
-	print_map_grid(&game.map);
 
-	// Execution 
+	// //Execution 
 	// excecution();
 	(void)argc;
 	(void)argv;

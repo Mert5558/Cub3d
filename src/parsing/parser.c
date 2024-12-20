@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:57:31 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/20 11:57:24 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/20 16:07:05 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ char **readfile(char *input_file)
 	char **file = NULL;
 
 	lines = count_lines(input_file);
-	printf("%d\n", lines);
 	if (lines == -1)
 		return (NULL);
 	fd = open(input_file, O_RDONLY);

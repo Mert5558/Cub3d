@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:49:47 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/20 11:27:36 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/20 16:06:45 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	*get_path(char *str)
 		printf("Error: failed memory allocantion\n");
 		return (NULL);
 	}
-	printf("%s\n", tex_path);
 	return (tex_path);
 }
 
