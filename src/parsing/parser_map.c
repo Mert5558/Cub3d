@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 11:46:24 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/20 14:33:34 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/23 14:06:48 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,13 +131,6 @@ int	assign_map(t_map *map, char **file, int i)
 	return (0);
 }
 
-// int	check_map_wall(t_map *map)
-// {
-	
-// }
-
-
-
 t_map	get_map(char **file, int i)
 {
 	t_map	map;
@@ -153,7 +146,7 @@ t_map	get_map(char **file, int i)
 		printf("Error: map has more than one player\n");
 	if (map.player_num < 1)
 		printf("Error: map has no player\n");
-	// if (check_map_wall(&map) == 1)
-	// 	printf("Error: map is not closed by walls\n");
+	if (check_map_wall(&map) == 1)
+		printf("Error: map is not closed by walls\n");
 	return (map);
 }
