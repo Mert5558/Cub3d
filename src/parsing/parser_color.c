@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 13:58:03 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/19 12:22:08 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/25 14:11:08 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,44 +26,55 @@ int	validate_color(int *color_values)
 	return (0);
 }
 
+int	extract_component(char *str, int *i, int *idx, int *vals)
+{
+	int		j;
+	char	*temp;
+
+	j = *i;
+	while (ft_isdigit(str[j]))
+		j++;
+	temp = ft_substr(str, *i, j - *i);
+	if (!temp)
+		return (-1);
+	if (*idx < 3)
+		vals[*idx] = ft_atoi(temp);
+	else
+	{
+		free(temp);
+		return (-1);
+	}
+	free(temp);
+	*idx = *idx + 1;
+	*i = j;
+	return (0);
+}
+
 int	parse_color(char *str, t_rgba *color)
 {
-	int		i;
-	int		j;
-	int		color_index;
-	char	*temp;
-	int		color_values[3];
-	
+	int	i;
+	int	idx;
+	int	vals[3];
+
 	i = 0;
-	color_index = 0;
-	while(str[i])
+	idx = 0;
+	while (str[i] && idx < 3)
 	{
 		if (ft_isdigit(str[i]))
 		{
-			j = i;
-			while (ft_isdigit(str[j]))
-				j++;
-			temp = ft_substr(str, i, j - i);
-			if (color_index < 3)
-				color_values[color_index++] = ft_atoi(temp);
-			else
-			{
-				free(temp);
+			if (extract_component(str, &i, &idx, vals) == -1)
 				return (-1);
-			}
-			free(temp);
-			i = j;
 		}
 		else if (str[i] != ',' && str[i] != ' ')
 			return (-1);
 		else
 			i++;
 	}
-	if (color_index != 3 || validate_color(color_values) == -1)
+	if (idx != 3 || validate_color(vals) == -1)
 		return (-1);
-	color->r = (u_int16_t)color_values[0];
-	color->g = (u_int16_t)color_values[1];
-	color->b = (u_int16_t)color_values[2];
+	color->r = (u_int16_t)vals[0];
+	color->g = (u_int16_t)vals[1];
+	color->b = (u_int16_t)vals[2];
 	color->a = 255;
 	return (0);
 }
@@ -79,7 +90,7 @@ void	get_color(t_game *game, char *file_str)
 		{
 			printf("Error: failed to parse floor color\n");
 			free(color_str);
-			return;
+			return ;
 		}
 	}
 	else if (ft_strncmp(file_str, "C", 1) == 0)
@@ -88,7 +99,7 @@ void	get_color(t_game *game, char *file_str)
 		{
 			printf("Error: failed to parse ceiling color\n");
 			free(color_str);
-			return;
+			return ;
 		}
 	}
 }

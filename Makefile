@@ -6,7 +6,7 @@
 #    By: merdal <merdal@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/06 11:49:16 by amecani           #+#    #+#              #
-#    Updated: 2024/12/23 14:07:15 by merdal           ###   ########.fr        #
+#    Updated: 2024/12/25 13:01:17 by merdal           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ LIBFT = includes/libft/libft.a
 GNL = includes/GetNextLine/GNL.a
 
 SRCS = src/main.c src/parsing/parser.c src/parsing/parser_file.c src/parsing/parser_color.c src/parsing/parser_map.c\
+	   src/parsing/parser_utils.c\
 	   src/parsing/parser_map_utils.c\
 	   src/excecuiton/beninging.c\
 	   src/excecuiton/loops.c

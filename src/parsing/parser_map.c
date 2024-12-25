@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 11:46:24 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/23 14:06:48 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/25 14:23:10 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@
 //     mlx_terminate(mlx);
 // }
 
-
 int	check_map(char *file_str)
 {
 	int	i;
@@ -95,36 +94,46 @@ int	map_max_height(char **file, int i)
 	return (len);
 }
 
+void	fill_grid_line(t_map *map, char *row, int j)
+{
+	int	x;
+
+	x = 0;
+	while (x < map->width)
+		{
+			if (x < (int)ft_strlen(row))
+			{
+				if (row[x] == ' ')
+					map->grid[j][x] = '2';
+				else if (row[x] == 'N' || row[x] == 'S' ||
+					row[x] == 'W' || row[x] == 'E')
+				{
+					map->player_num++;
+					map->grid[j][x] = row[x];
+				}
+				else
+					map->grid[j][x] = row[x];
+			}
+			else
+				map->grid[j][x] = '2';
+			x++;
+		}
+}
+
 int	assign_map(t_map *map, char **file, int i)
 {
 	int	j;
-	int	x;
 
 	j = 0;
 	while (file[i] && file[i][0] != '\0')
 	{
 		map->grid[j] = ft_calloc(map->width + 1, sizeof(char));
 		if (!map->grid[j])
-			printf("Error: failed allocation!");
-		x = 0;
-		while (x < map->width)
 		{
-			if (x < (int)ft_strlen(file[i]))
-			{
-				if (file[i][x] == ' ')
-					map->grid[j][x] = '2';
-				else if (file[i][x] == 'N' || file[i][x] == 'S' || file[i][x] == 'W' || file[i][x] == 'E')
-				{
-					map->player_num++;
-					map->grid[j][x] = file[i][x];
-				}
-				else
-					map->grid[j][x] = file[i][x];
-			}
-			else
-				map->grid[j][x] = '2';
-			x++;
+			printf("Error: failed allocation!");
+			return (-1);
 		}
+		fill_grid_line(map, file[i], j);
 		j++;
 		i++;
 	}
