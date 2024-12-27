@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:49:47 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/25 14:37:20 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/27 12:01:24 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ int	fill_grid(t_texture *texture, char *tex_path)
 	texture->height = png->height;
 	texture->width = png->width;
 	if (alloc_fill_grid(texture, png) == -1)
+	{
 		printf("Error: allocation failed!\n");
+		return (-1);
+	}
 	mlx_delete_texture(png);
 	return (0);
 }

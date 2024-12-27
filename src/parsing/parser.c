@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:57:31 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/25 14:36:05 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/27 12:00:40 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	**readfile(char *input_file)
 
 	lines = count_lines(input_file);
 	if (lines == -1)
-		error_exit("Error counting lines!", 1);
+		error_exit("Error opening map file!", 1);
 	fd = open(input_file, O_RDONLY);
 	if (fd == -1)
 	{
@@ -102,4 +102,5 @@ void	parser(t_game *game, char *input_file)
 	file = readfile(input_file);
 	print_char_array(file);
 	file_info(game, file);
+	free(file);
 }

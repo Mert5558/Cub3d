@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 11:46:24 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/25 14:23:10 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/25 16:04:43 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@
 //     {
 //         for (j = 0; j < width; j++)
 //         {
-//             int color = (texture.grid[i][j].r << 24) | (texture.grid[i][j].g << 16) | (texture.grid[i][j].b << 8) | texture.grid[i][j].a;
+//             int color = (texture.grid[i][j].r << 24)
+// 				| (texture.grid[i][j].g << 16) | (texture.grid[i][j].b << 8)
+// 				| texture.grid[i][j].a;
 //             mlx_put_pixel(img, j, i, color);
 //         }
 //     }
@@ -54,20 +56,6 @@
 //     mlx_delete_image(mlx, img);
 //     mlx_terminate(mlx);
 // }
-
-int	check_map(char *file_str)
-{
-	int	i;
-
-	i = 0;
-	while (file_str[i])
-	{
-		if (file_str[i] == '1')
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 int	map_max_width(char **file, int i)
 {
@@ -100,24 +88,24 @@ void	fill_grid_line(t_map *map, char *row, int j)
 
 	x = 0;
 	while (x < map->width)
+	{
+		if (x < (int)ft_strlen(row))
 		{
-			if (x < (int)ft_strlen(row))
+			if (row[x] == ' ')
+				map->grid[j][x] = '2';
+			else if (row[x] == 'N' || row[x] == 'S'
+				|| row[x] == 'W' || row[x] == 'E')
 			{
-				if (row[x] == ' ')
-					map->grid[j][x] = '2';
-				else if (row[x] == 'N' || row[x] == 'S' ||
-					row[x] == 'W' || row[x] == 'E')
-				{
-					map->player_num++;
-					map->grid[j][x] = row[x];
-				}
-				else
-					map->grid[j][x] = row[x];
+				map->player_num++;
+				map->grid[j][x] = row[x];
 			}
 			else
-				map->grid[j][x] = '2';
-			x++;
+				map->grid[j][x] = row[x];
 		}
+		else
+			map->grid[j][x] = '2';
+		x++;
+	}
 }
 
 int	assign_map(t_map *map, char **file, int i)
@@ -129,10 +117,7 @@ int	assign_map(t_map *map, char **file, int i)
 	{
 		map->grid[j] = ft_calloc(map->width + 1, sizeof(char));
 		if (!map->grid[j])
-		{
-			printf("Error: failed allocation!");
 			return (-1);
-		}
 		fill_grid_line(map, file[i], j);
 		j++;
 		i++;
@@ -150,12 +135,13 @@ t_map	get_map(char **file, int i)
 	map.grid = ft_calloc(map.height + 1, sizeof(char *));
 	if (!map.grid)
 		printf("Error: failed allocation!");
-	assign_map(&map, file, i);
+	if (assign_map(&map, file, i) == -1)
+		error_exit("Error: failed to extract map!", 1);
 	if (map.player_num > 1)
-		printf("Error: map has more than one player\n");
+		error_exit("Error: map has more than one player", 1);
 	if (map.player_num < 1)
-		printf("Error: map has no player\n");
-	if (check_map_wall(&map) == 1)
-		printf("Error: map is not closed by walls\n");
+		error_exit("Error: map has no player", 1);
+	if (check_map_wall(&map) == -1)
+		error_exit("Error: map is not closed by walls", 1);
 	return (map);
 }

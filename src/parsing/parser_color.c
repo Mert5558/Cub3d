@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 13:58:03 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/25 14:11:08 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/25 14:45:20 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,18 +88,16 @@ void	get_color(t_game *game, char *file_str)
 	{
 		if (parse_color(color_str, &game->floor_color) == -1)
 		{
-			printf("Error: failed to parse floor color\n");
 			free(color_str);
-			return ;
+			error_exit("Error: failed to parse floor color\n", 1);
 		}
 	}
 	else if (ft_strncmp(file_str, "C", 1) == 0)
 	{
 		if (parse_color(color_str, &game->ceil_color) == -1)
 		{
-			printf("Error: failed to parse ceiling color\n");
 			free(color_str);
-			return ;
+			error_exit("Error: failed to parse ceiling color\n", 1);
 		}
 	}
 }
