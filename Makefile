@@ -6,22 +6,23 @@
 #    By: merdal <merdal@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/06 11:49:16 by amecani           #+#    #+#              #
-#    Updated: 2024/12/25 13:01:17 by merdal           ###   ########.fr        #
+#    Updated: 2024/12/30 12:18:58 by merdal           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .silent:
 
-NAME = Cub3D
+NAME = cub3D
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address 
+CFLAGS = -Wall -Wextra -Werror
 MLX_FLAGS = -ldl -lglfw -pthread -lm 
 LIBFT = includes/libft/libft.a
 GNL = includes/GetNextLine/GNL.a
 
 SRCS = src/main.c src/parsing/parser.c src/parsing/parser_file.c src/parsing/parser_color.c src/parsing/parser_map.c\
 	   src/parsing/parser_utils.c\
+	   src/parsing/parser_utils2.c\
 	   src/parsing/parser_map_utils.c\
 	   src/excecuiton/beninging.c\
 	   src/excecuiton/loops.c
