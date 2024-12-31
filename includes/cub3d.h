@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:03:59 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/25 16:04:30 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/27 14:32:31 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ t_map	get_map(char **file, int i);
 int		check_map_wall(t_map *map);
 char	*get_path(char *str);
 void	error_exit(char *str, int exit_num);
+void	error_exit_free(char *str, int exit_num, char **array);
 int		check_map(char *file_str);
+void	free_char_array(char **array);
+void	free_game(t_game *game);
 
 //-----------------Excucution---------------
 
