@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:57:31 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/27 12:00:40 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/27 14:40:25 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ int	count_lines(char *input_file)
 		close(fd);
 		return (-1);
 	}
-	while ((file_line = get_next_line(fd)) != NULL)
+	file_line = get_next_line(fd);
+	while (file_line != NULL)
 	{
 		count++;
 		free(file_line);
+		file_line = get_next_line(fd);
 	}
 	close(fd);
 	return (count);
@@ -102,5 +104,5 @@ void	parser(t_game *game, char *input_file)
 	file = readfile(input_file);
 	print_char_array(file);
 	file_info(game, file);
-	free(file);
+	free_char_array(file);
 }

@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 13:58:03 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/25 14:45:20 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/27 14:08:41 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,5 @@ void	get_color(t_game *game, char *file_str)
 			error_exit("Error: failed to parse ceiling color\n", 1);
 		}
 	}
+	free(color_str);
 }

@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 12:59:52 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/25 16:09:08 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/27 14:35:50 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,30 @@ char	*get_path(char *str)
 	return (tex_path);
 }
 
+void	free_char_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	if (!array)
+		error_exit("failed to free!", 1);
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
 void	error_exit(char *str, int exit_num)
 {
 	printf("%s\n", str);
+	exit(exit_num);
+}
+
+void	error_exit_free(char *str, int exit_num, char **array)
+{
+	printf("%s\n", str);
+	free_char_array(array);
 	exit(exit_num);
 }

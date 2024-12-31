@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:49:47 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/27 12:01:24 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/27 13:50:46 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,17 @@ int	alloc_fill_grid(t_texture *texture, mlx_texture_t *png)
 
 	texture->grid = malloc(sizeof(t_rgba *) * texture->height);
 	if (!texture->grid)
-	{
-		printf("Error: allocation failed!");
 		return (-1);
-	}
 	i = 0;
 	while (i < texture->height)
 	{
 		if (fill_grid_color(texture->grid, i, png->width, png) == -1)
 		{
+			while (i > 0)
+			{
+				i--;
+				free(texture->grid[i]);
+			}
 			free(texture->grid);
 			return (-1);
 		}
@@ -87,7 +89,11 @@ t_texture	load_texture(t_texture texture, char *file_str)
 
 	tex_path = get_path(file_str);
 	if (fill_grid(&texture, tex_path) == -1)
+	{
 		error_exit("Error loading texture!", 1);
+		free(tex_path);
+	}
+	free(tex_path);
 	return (texture);
 }
 

@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 11:46:24 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/25 16:04:43 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/30 14:48:07 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,14 +134,14 @@ t_map	get_map(char **file, int i)
 	map.height = map_max_height(file, i);
 	map.grid = ft_calloc(map.height + 1, sizeof(char *));
 	if (!map.grid)
-		printf("Error: failed allocation!");
+		error_exit_free("Error: failed allocation!", 1, map.grid);
 	if (assign_map(&map, file, i) == -1)
-		error_exit("Error: failed to extract map!", 1);
+		error_exit_free("Error: failed to extract map!", 1, map.grid);
 	if (map.player_num > 1)
-		error_exit("Error: map has more than one player", 1);
+		error_exit_free("Error: map has more than one player", 1, map.grid);
 	if (map.player_num < 1)
-		error_exit("Error: map has no player", 1);
+		error_exit_free("Error: map has no player", 1, map.grid);
 	if (check_map_wall(&map) == -1)
-		error_exit("Error: map is not closed by walls", 1);
+		error_exit_free("Error: map is not closed by walls", 1, map.grid);
 	return (map);
 }
