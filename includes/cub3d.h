@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:03:59 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/27 14:32:31 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/31 16:37:15 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ typedef struct s_texture
 typedef struct s_map
 {
 	int		player_num;
+	double	player_x;
+	double	player_y;
+	int		player_x_orientation;
+	int		player_y_orientation;
+	int		player_angle;
 	int		width;
 	int		height;
 	char	**grid;
@@ -80,9 +85,9 @@ int		check_map_wall(t_map *map);
 char	*get_path(char *str);
 void	error_exit(char *str, int exit_num);
 void	error_exit_free(char *str, int exit_num, char **array);
-int		check_map(char *file_str);
 void	free_char_array(char **array);
 void	free_game(t_game *game);
+int		map_space(char **file, int i);
 
 //-----------------Excucution---------------
 
