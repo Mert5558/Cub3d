@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 11:46:24 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/30 14:48:07 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/31 16:45:52 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,10 @@ void	fill_grid_line(t_map *map, char *row, int j)
 				map->player_num++;
 				map->grid[j][x] = row[x];
 			}
-			else
+			else if ((row[x] == '0' || row[x] == '1' || row[x] == '2'))
 				map->grid[j][x] = row[x];
+			else
+				error_exit_free("Error: unexpected char in map!", 1, map->grid);
 		}
 		else
 			map->grid[j][x] = '2';
@@ -135,6 +137,8 @@ t_map	get_map(char **file, int i)
 	map.grid = ft_calloc(map.height + 1, sizeof(char *));
 	if (!map.grid)
 		error_exit_free("Error: failed allocation!", 1, map.grid);
+	if (map_space(file, i))
+		error_exit_free("Error: empty line in map!", 1, map.grid);
 	if (assign_map(&map, file, i) == -1)
 		error_exit_free("Error: failed to extract map!", 1, map.grid);
 	if (map.player_num > 1)

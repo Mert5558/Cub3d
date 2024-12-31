@@ -6,11 +6,22 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 12:59:52 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/27 14:35:50 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/31 14:44:19 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+int	map_space(char **file, int i)
+{
+	while (file[i])
+	{
+		if (file[i][0] == '\0')
+			return (-1);
+		i++;
+	}
+	return (0);
+}
 
 char	*get_path(char *str)
 {

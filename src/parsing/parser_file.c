@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:49:47 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/27 13:50:46 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/31 16:15:16 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,26 +100,52 @@ t_texture	load_texture(t_texture texture, char *file_str)
 void	file_info(t_game *game, char **file)
 {
 	int	i;
+	int found;
 
 	i = 0;
+	found = 0;
 	while (file[i])
 	{
-		if (ft_strncmp(file[i], "NO", 2) == 0)
+		if (ft_strncmp(file[i], "NO ", 3) == 0)
+		{
 			game->textures[NO] = load_texture(game->textures[NO], file[i]);
-		else if (ft_strncmp(file[i], "SO", 2) == 0)
+			found++;
+		}
+		else if (ft_strncmp(file[i], "SO ", 3) == 0)
+		{
 			game->textures[SO] = load_texture(game->textures[SO], file[i]);
-		else if (ft_strncmp(file[i], "WE", 2) == 0)
+			found++;
+		}
+		else if (ft_strncmp(file[i], "WE ", 3) == 0)
+		{
 			game->textures[WE] = load_texture(game->textures[WE], file[i]);
-		else if (ft_strncmp(file[i], "EA", 2) == 0)
+			found++;
+		}
+		else if (ft_strncmp(file[i], "EA ", 3) == 0)
+		{
 			game->textures[EA] = load_texture(game->textures[EA], file[i]);
-		else if (ft_strncmp(file[i], "F", 1) == 0
-			|| ft_strncmp(file[i], "C", 1) == 0)
+			found++;
+		}
+		else if (ft_strncmp(file[i], "F ", 2) == 0)
+		{
 			get_color(game, file[i]);
+			found++;
+		}
+		else if (ft_strncmp(file[i], "C ", 2) == 0)
+		{
+			get_color(game, file[i]);
+			found++;
+		}
 		else if (check_map(file[i]))
 		{
 			game->map = get_map(file, i);
+			found++;
 			break ;
 		}
+		else if (file[i][0] != '\0')
+			error_exit("Error: Unknown identifier!", 1);
 		i++;
 	}
+	if (found != 7)
+		error_exit("Error: not all identifiers", 1);
 }

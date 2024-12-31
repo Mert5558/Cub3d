@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:46:26 by amecani           #+#    #+#             */
-/*   Updated: 2024/12/27 11:55:10 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/31 16:59:27 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,28 +73,30 @@ void	putting_wasll_manuanylly(t_exec *exec_data)
 	}
 }
 
-int	leaks(void)
-{
-	return (system("leaks Cub3D"));
-}
+// int	leaks(void)
+// {
+// 	return (system("leaks cub3D"));
+// }
+// 	atexit((void *)leaks);
+
+#include <stdio.h> // For printf
+
 
 int main (int argc, char **argv)
 {
 	t_game game;
 
-	atexit((void *)leaks);
 	if (argc != 2)
 	{
 		printf("Wrong number of arguments!\nUsage: ./cub3d + map.cub");
 		exit(1);
 	}
 	parser(&game, argv[1]);
-
 	// //Execution 
 	// excecution();
 	(void)argc;
 	(void)argv;
 	// Execution 
-
+	free_game(&game);
 	return (0);
 }

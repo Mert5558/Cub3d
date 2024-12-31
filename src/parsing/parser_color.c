@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 13:58:03 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/27 14:08:41 by merdal           ###   ########.fr       */
+/*   Updated: 2024/12/31 16:26:20 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	parse_color(char *str, t_rgba *color)
 
 	i = 0;
 	idx = 0;
-	while (str[i] && idx < 3)
+	while (str[i] && idx < 4)
 	{
 		if (ft_isdigit(str[i]))
 		{
@@ -89,7 +89,7 @@ void	get_color(t_game *game, char *file_str)
 		if (parse_color(color_str, &game->floor_color) == -1)
 		{
 			free(color_str);
-			error_exit("Error: failed to parse floor color\n", 1);
+			error_exit("Error: failed to parse floor color", 1);
 		}
 	}
 	else if (ft_strncmp(file_str, "C", 1) == 0)
@@ -97,7 +97,7 @@ void	get_color(t_game *game, char *file_str)
 		if (parse_color(color_str, &game->ceil_color) == -1)
 		{
 			free(color_str);
-			error_exit("Error: failed to parse ceiling color\n", 1);
+			error_exit("Error: failed to parse ceiling color", 1);
 		}
 	}
 	free(color_str);
