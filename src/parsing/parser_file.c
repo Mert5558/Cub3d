@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:49:47 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/31 16:15:16 by merdal           ###   ########.fr       */
+/*   Updated: 2025/01/01 12:20:58 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,32 +106,32 @@ void	file_info(t_game *game, char **file)
 	found = 0;
 	while (file[i])
 	{
-		if (ft_strncmp(file[i], "NO ", 3) == 0)
+		if (ft_strncmp(file[i], "NO", 2) == 0)
 		{
 			game->textures[NO] = load_texture(game->textures[NO], file[i]);
 			found++;
 		}
-		else if (ft_strncmp(file[i], "SO ", 3) == 0)
+		else if (ft_strncmp(file[i], "SO", 2) == 0)
 		{
 			game->textures[SO] = load_texture(game->textures[SO], file[i]);
 			found++;
 		}
-		else if (ft_strncmp(file[i], "WE ", 3) == 0)
+		else if (ft_strncmp(file[i], "WE", 2) == 0)
 		{
 			game->textures[WE] = load_texture(game->textures[WE], file[i]);
 			found++;
 		}
-		else if (ft_strncmp(file[i], "EA ", 3) == 0)
+		else if (ft_strncmp(file[i], "EA", 2) == 0)
 		{
 			game->textures[EA] = load_texture(game->textures[EA], file[i]);
 			found++;
 		}
-		else if (ft_strncmp(file[i], "F ", 2) == 0)
+		else if (ft_strncmp(file[i], "F", 1) == 0)
 		{
 			get_color(game, file[i]);
 			found++;
 		}
-		else if (ft_strncmp(file[i], "C ", 2) == 0)
+		else if (ft_strncmp(file[i], "C", 1) == 0)
 		{
 			get_color(game, file[i]);
 			found++;
