@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:03:59 by merdal            #+#    #+#             */
-/*   Updated: 2025/01/01 15:23:52 by merdal           ###   ########.fr       */
+/*   Updated: 2025/01/01 16:34:17 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include "libft/libft.h"
 # include "GetNextLine/get_next_line.h"
-// # include "MLX42.h" // *Fix later (to make it more estheticallty looin)
-# include "../MLX42/include/MLX42/MLX42.h"
 # include "../MLX42/include/MLX42/MLX42.h"
 # include <stdio.h>
 # include <unistd.h>
@@ -29,14 +27,6 @@
 
 #define WIDTH 800
 #define HEIGHT 600
-typedef struct s_exec
-{
-	mlx_texture_t	*wall[4];
-	int	floor_colour;
-	int	celeing_colour;
-	mlx_t	*window;
-
-}	t_exec;
 
 typedef struct s_rgba
 {
@@ -90,16 +80,5 @@ void	free_game(t_game *game);
 int		map_space(t_map *map, char **file, int i);
 
 //-----------------Excucution---------------
-
-//////// SINGLE RAN /////////
-void	excecution(void);
-void	putting_wasll_manuanylly(t_exec *exec_data);
-int		get_rgba(int r, int g, int b, int a);
-/////////////////////////////
-//////// LOOPSSSSSSS /////////
-void	loops_in_here(t_exec *execut);
-void	paint_floor_and_celing(mlx_t *window, int f_c, int c_c);
-void	loopin(void *param);
-/////////////////////////////
 
 #endif
