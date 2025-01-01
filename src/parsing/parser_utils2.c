@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:26:37 by merdal            #+#    #+#             */
-/*   Updated: 2025/01/01 14:48:16 by merdal           ###   ########.fr       */
+/*   Updated: 2025/01/01 15:23:48 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,28 +55,4 @@ void	free_game(t_game *game)
 		i++;
 	}
 	free_map(&game->map);
-}
-
-int	map_leeeeeen(char **file, int i)
-{
-	int	len;
-	int	found_map;
-
-	len = 0;
-	found_map = 0;
-
-	while (file[i])
-	{
-		if (file[i][0] != '\0') // Non-empty line
-		{
-			found_map = 1;
-			len++;
-		}
-		else if (found_map) // Empty line after map starts
-		{
-			break;
-		}
-		i++;
-	}
-	return (len);
 }

@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:49:47 by merdal            #+#    #+#             */
-/*   Updated: 2025/01/01 12:20:58 by merdal           ###   ########.fr       */
+/*   Updated: 2025/01/01 16:23:12 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_texture	load_texture(t_texture texture, char *file_str)
 void	file_info(t_game *game, char **file)
 {
 	int	i;
-	int found;
+	int	found;
 
 	i = 0;
 	found = 0;
@@ -142,7 +142,7 @@ void	file_info(t_game *game, char **file)
 			found++;
 			break ;
 		}
-		else if (file[i][0] != '\0')
+		else if (file[i][0] != '\0' && file[i][0] != '\t' && file[i][0] != ' ')
 			error_exit("Error: Unknown identifier!", 1);
 		i++;
 	}

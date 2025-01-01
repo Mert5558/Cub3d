@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 14:14:45 by merdal            #+#    #+#             */
-/*   Updated: 2025/01/01 15:06:47 by merdal           ###   ########.fr       */
+/*   Updated: 2025/01/01 15:21:17 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int	check_map(char *file_str)
 	return (0);
 }
 
-int	check_inside(t_map *map, int x, int y, int map_len)
+int	check_inside(t_map *map, int x, int y)
 {
 	y = 1;
-	while (y < map_len - 1)
+	while (y < map->height - 1)
 	{
 		x = 1;
 		while (x < map->width - 1)
@@ -47,9 +47,9 @@ int	check_inside(t_map *map, int x, int y, int map_len)
 	return (0);
 }
 
-int	check_left_right(t_map *map, int y, int map_len)
+int	check_left_right(t_map *map, int y)
 {
-	while (y < map_len)
+	while (y < map->height)
 	{
 		if (map->grid[y][0] != '1' && map->grid[y][0] != '2')
 			return (-1);
@@ -61,32 +61,32 @@ int	check_left_right(t_map *map, int y, int map_len)
 	return (0);
 }
 
-int	check_top_bottom(t_map *map, int x, int map_len)
+int	check_top_bottom(t_map *map, int x)
 {
 	while (x < map->width)
 	{
 		if (map->grid[0][x] != '1' && map->grid[0][x] != '2')
 			return (-1);
-		if (map->grid[map_len - 1][x] != '1'
-			&& map->grid[map_len - 1][x] != '2')
+		if (map->grid[map->height - 1][x] != '1'
+			&& map->grid[map->height - 1][x] != '2')
 			return (-1);
 		x++;
 	}
 	return (0);
 }
 
-int	check_map_wall(t_map *map , int map_len)
+int	check_map_wall(t_map *map)
 {
 	int	x;
 	int	y;
 
 	x = 0;
-	if (check_top_bottom(map, x, map_len) == -1)
+	if (check_top_bottom(map, x) == -1)
 		return (-1);
 	y = 0;
-	if (check_left_right(map, y, map_len) == -1)
+	if (check_left_right(map, y) == -1)
 		return (-1);
-	if (check_inside(map, x, y, map_len) == -1)
+	if (check_inside(map, x, y) == -1)
 		return (-1);
 	return (0);
 }
