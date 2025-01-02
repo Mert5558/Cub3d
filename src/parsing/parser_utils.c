@@ -6,7 +6,7 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 12:59:52 by merdal            #+#    #+#             */
-/*   Updated: 2025/01/01 16:11:31 by merdal           ###   ########.fr       */
+/*   Updated: 2025/01/02 14:19:13 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	map_space(t_map *map, char **file, int i)
 				return (-1);
 			while (file[i])
 			{
-				if (file[i][0] != '\0')
+				if (file[i][0] != '\0' && file[i][0]
+						!= '\t' && file[i][0] != ' ')
 					return (-1);
 				i++;
 			}

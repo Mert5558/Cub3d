@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: disilva <disilva@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:57:31 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/31 16:32:43 by merdal           ###   ########.fr       */
+/*   Updated: 2025/01/02 02:32:40 by disilva          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,24 +85,11 @@ char	**readfile(char *input_file)
 	return (file);
 }
 
-void	print_char_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i] != NULL)
-	{
-		printf("%s\n", array[i]);
-		i++;
-	}
-}
-
 void	parser(t_game *game, char *input_file)
 {
 	char	**file;
 
 	file = readfile(input_file);
-	print_char_array(file);
 	file_info(game, file);
 	free_char_array(file);
 }

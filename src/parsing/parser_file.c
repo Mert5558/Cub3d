@@ -6,146 +6,96 @@
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:49:47 by merdal            #+#    #+#             */
-/*   Updated: 2025/01/01 16:23:12 by merdal           ###   ########.fr       */
+/*   Updated: 2025/01/02 12:25:09 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	fill_grid_color(t_rgba **grid, int i, int width, mlx_texture_t *png)
+int	ft_isspace(int c)
 {
-	int	j;
-	int	pixel_index;
+	int	is_space;
 
-	grid[i] = malloc(sizeof(t_rgba) * width);
-	if (!grid[i])
-	{
-		printf("Error: allocation failed!");
-		mlx_delete_texture(png);
-		return (-1);
-	}
-	j = 0;
-	while (j < width)
-	{
-		pixel_index = (i * width + j) * 4;
-		grid[i][j].r = png->pixels[pixel_index];
-		grid[i][j].g = png->pixels[pixel_index + 1];
-		grid[i][j].b = png->pixels[pixel_index + 2];
-		grid[i][j].a = png->pixels[pixel_index + 3];
-		j++;
-	}
-	return (0);
+	is_space = (c == ' ' || c == '\t' || c == '\n'
+			|| c == '\n' || c == '\f' || c == '\r');
+	return (is_space);
 }
 
-int	alloc_fill_grid(t_texture *texture, mlx_texture_t *png)
+char	*trim_spaces(char *str)
 {
-	int	i;
-
-	texture->grid = malloc(sizeof(t_rgba *) * texture->height);
-	if (!texture->grid)
-		return (-1);
-	i = 0;
-	while (i < texture->height)
-	{
-		if (fill_grid_color(texture->grid, i, png->width, png) == -1)
-		{
-			while (i > 0)
-			{
-				i--;
-				free(texture->grid[i]);
-			}
-			free(texture->grid);
-			return (-1);
-		}
-		i++;
-	}
-	return (0);
+	while (ft_isspace((unsigned char)*str))
+		str++;
+	return (str);
 }
 
-int	fill_grid(t_texture *texture, char *tex_path)
+void	file_info_3(t_game *game, char **file, t_parse *p)
 {
-	mlx_texture_t	*png;
+	char	*trimmed;
 
-	png = mlx_load_png(tex_path);
-	if (!png)
+	trimmed = trim_spaces(file[p->i]);
+	if (ft_strncmp(trimmed, "F", 1) == 0)
 	{
-		printf("Error: texture invalid!");
-		return (-1);
+		get_color(game, trimmed);
+		p->found_2 = 1;
+		(p->found)++;
 	}
-	texture->height = png->height;
-	texture->width = png->width;
-	if (alloc_fill_grid(texture, png) == -1)
+	else if (ft_strncmp(trimmed, "C", 1) == 0)
 	{
-		printf("Error: allocation failed!\n");
-		return (-1);
+		get_color(game, trimmed);
+		p->found_2 = 1;
+		(p->found)++;
 	}
-	mlx_delete_texture(png);
-	return (0);
 }
 
-t_texture	load_texture(t_texture texture, char *file_str)
+void	file_info_2(t_game *game, char **file, t_parse *p)
 {
-	char			*tex_path;
+	char	*trimmed;
 
-	tex_path = get_path(file_str);
-	if (fill_grid(&texture, tex_path) == -1)
+	trimmed = trim_spaces(file[p->i]);
+	if (ft_strncmp(trimmed, "NO", 2) == 0)
 	{
-		error_exit("Error loading texture!", 1);
-		free(tex_path);
+		(p->found) += process_n_texture(trimmed, game);
+		p->found_2 = 1;
 	}
-	free(tex_path);
-	return (texture);
+	else if (ft_strncmp(trimmed, "SO", 2) == 0)
+	{
+		(p->found) += process_s_texture(trimmed, game);
+		p->found_2 = 1;
+	}
+	else if (ft_strncmp(trimmed, "WE", 2) == 0)
+	{
+		(p->found) += process_w_texture(trimmed, game);
+		p->found_2 = 1;
+	}
+	else if (ft_strncmp(trimmed, "EA", 2) == 0)
+	{
+		(p->found) += process_e_texture(trimmed, game);
+		p->found_2 = 1;
+	}
 }
 
 void	file_info(t_game *game, char **file)
 {
-	int	i;
-	int	found;
+	t_parse	p;
 
-	i = 0;
-	found = 0;
-	while (file[i])
+	p.i = 0;
+	p.found = 0;
+	while (file[p.i])
 	{
-		if (ft_strncmp(file[i], "NO", 2) == 0)
+		p.found_2 = 0;
+		file_info_2(game, file, &p);
+		file_info_3(game, file, &p);
+		if (p.found_2 == 0 && check_map(file[p.i]))
 		{
-			game->textures[NO] = load_texture(game->textures[NO], file[i]);
-			found++;
-		}
-		else if (ft_strncmp(file[i], "SO", 2) == 0)
-		{
-			game->textures[SO] = load_texture(game->textures[SO], file[i]);
-			found++;
-		}
-		else if (ft_strncmp(file[i], "WE", 2) == 0)
-		{
-			game->textures[WE] = load_texture(game->textures[WE], file[i]);
-			found++;
-		}
-		else if (ft_strncmp(file[i], "EA", 2) == 0)
-		{
-			game->textures[EA] = load_texture(game->textures[EA], file[i]);
-			found++;
-		}
-		else if (ft_strncmp(file[i], "F", 1) == 0)
-		{
-			get_color(game, file[i]);
-			found++;
-		}
-		else if (ft_strncmp(file[i], "C", 1) == 0)
-		{
-			get_color(game, file[i]);
-			found++;
-		}
-		else if (check_map(file[i]))
-		{
-			game->map = get_map(file, i);
-			found++;
+			game->map = get_map(file, p.i);
+			p.found++;
 			break ;
 		}
-		else if (file[i][0] != '\0' && file[i][0] != '\t' && file[i][0] != ' ')
+		else if (p.found_2 == 0 && file[p.i][0] != '\0'
+			&& file[p.i][0] != '\t' && file[p.i][0] != ' ')
 			error_exit("Error: Unknown identifier!", 1);
-		i++;
+		p.i++;
 	}
-	if (found != 7)
+	if (p.found != 7)
 		error_exit("Error: not all identifiers", 1);
 }

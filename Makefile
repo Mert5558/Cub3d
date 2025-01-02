@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: merdal <merdal@student.42.fr>              +#+  +:+       +#+         #
+#    By: disilva <disilva@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/06 11:49:16 by amecani           #+#    #+#              #
-#    Updated: 2025/01/01 16:32:51 by merdal           ###   ########.fr        #
+#    Updated: 2025/01/02 00:44:02 by disilva          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,15 +15,17 @@
 NAME = cub3D
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 MLX_FLAGS = -ldl -lglfw -pthread -lm 
 LIBFT = includes/libft/libft.a
 GNL = includes/GetNextLine/GNL.a
 
-SRCS = src/main.c src/parsing/parser.c src/parsing/parser_file.c src/parsing/parser_color.c src/parsing/parser_map.c\
-	   src/parsing/parser_utils.c\
-	   src/parsing/parser_utils2.c\
-	   src/parsing/parser_map_utils.c\
+SRCS = src/main.c src/parsing/parser.c src/parsing/parser_file.c src/parsing/parser_map.c\
+	   src/parsing/parser_utils.c src/parsing/parser_utils2.c src/parsing/parser_map_utils.c src/parsing/process_textures.c\
+		src/execution/calculate_rays.c src/execution/errors.c src/execution/keys.c \
+        src/execution/movement.c src/execution/image.c src/parsing/check_params.c \
+		 src/parsing/parser_color.c src/execution/calculate_rays_2.c src/execution/image_2.c \
+		 src/parsing/process_textures_utils.c src/parsing/process_textures_2.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -60,10 +62,10 @@ fclean: clean
 	@make -C includes/GetNextLine fclean
 	@rm -rf $(OBJECTS)
 	@rm -rf $(NAME)
+
+rmlx42:
 	@rm -rf ./MLX42
 
 re: fclean all
 
-re: fclean all
-
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re rmlx42

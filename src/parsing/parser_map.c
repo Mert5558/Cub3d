@@ -3,59 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: disilva <disilva@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 11:46:24 by merdal            #+#    #+#             */
-/*   Updated: 2025/01/01 16:13:35 by merdal           ###   ########.fr       */
+/*   Updated: 2025/01/02 02:33:57 by disilva          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-// void	display_texture(t_game *game, int texture_index)
-// {
-//     mlx_t	*mlx;
-//     mlx_image_t *img;
-//     int		width;
-//     int		height;
-//     int		i, j;
-//     t_texture texture;
-
-//     width = game->textures[texture_index].width;
-//     height = game->textures[texture_index].height;
-
-//     mlx = mlx_init(width, height, "Texture Display", false);
-//     if (!mlx)
-//     {
-//         printf("Error initializing MLX\n");
-//         return;
-//     }
-
-//     img = mlx_new_image(mlx, width, height);
-//     if (!img)
-//     {
-//         printf("Error creating image\n");
-//         mlx_terminate(mlx);
-//         return;
-//     }
-
-//     texture = game->textures[texture_index];
-//     for (i = 0; i < height; i++)
-//     {
-//         for (j = 0; j < width; j++)
-//         {
-//             int color = (texture.grid[i][j].r << 24)
-// 				| (texture.grid[i][j].g << 16) | (texture.grid[i][j].b << 8)
-// 				| texture.grid[i][j].a;
-//             mlx_put_pixel(img, j, i, color);
-//         }
-//     }
-
-//     mlx_image_to_window(mlx, img, 0, 0);
-//     mlx_loop(mlx);
-//     mlx_delete_image(mlx, img);
-//     mlx_terminate(mlx);
-// }
 
 int	map_max_width(char **file, int i)
 {
@@ -108,6 +63,7 @@ void	fill_grid_line(t_map *map, char *row, int j)
 			{
 				map->player_num++;
 				map->grid[j][x] = row[x];
+				player_orientation(row[x], map, x, j);
 			}
 			else if ((row[x] == '0' || row[x] == '1' || row[x] == '2'))
 				map->grid[j][x] = row[x];
@@ -144,7 +100,6 @@ t_map	get_map(char **file, int i)
 	map.player_num = 0;
 	map.width = map_max_width(file, i);
 	map.height = map_max_height(file, i);
-	printf("map_height: %d\n", map.height);
 	map.grid = ft_calloc(map.height + 1, sizeof(char *));
 	if (!map.grid)
 		error_exit_free("Error: failed allocation!", 1, map.grid);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_color.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: disilva <disilva@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 13:58:03 by merdal            #+#    #+#             */
-/*   Updated: 2024/12/31 16:26:20 by merdal           ###   ########.fr       */
+/*   Updated: 2025/01/01 22:20:06 by disilva          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	extract_component(char *str, int *i, int *idx, int *vals)
 	return (0);
 }
 
-int	parse_color(char *str, t_rgba *color)
+int	parse_color(char *str, t_color *color)
 {
 	int	i;
 	int	idx;
@@ -72,9 +72,9 @@ int	parse_color(char *str, t_rgba *color)
 	}
 	if (idx != 3 || validate_color(vals) == -1)
 		return (-1);
-	color->r = (u_int16_t)vals[0];
-	color->g = (u_int16_t)vals[1];
-	color->b = (u_int16_t)vals[2];
+	color->red = (u_int16_t)vals[0];
+	color->green = (u_int16_t)vals[1];
+	color->blue = (u_int16_t)vals[2];
 	color->a = 255;
 	return (0);
 }
@@ -86,7 +86,7 @@ void	get_color(t_game *game, char *file_str)
 	color_str = get_path(file_str);
 	if (ft_strncmp(file_str, "F", 1) == 0)
 	{
-		if (parse_color(color_str, &game->floor_color) == -1)
+		if (parse_color(color_str, &game->pic.floor_color) == -1)
 		{
 			free(color_str);
 			error_exit("Error: failed to parse floor color", 1);
@@ -94,7 +94,7 @@ void	get_color(t_game *game, char *file_str)
 	}
 	else if (ft_strncmp(file_str, "C", 1) == 0)
 	{
-		if (parse_color(color_str, &game->ceil_color) == -1)
+		if (parse_color(color_str, &game->pic.celing_color) == -1)
 		{
 			free(color_str);
 			error_exit("Error: failed to parse ceiling color", 1);

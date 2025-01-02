@@ -5,31 +5,26 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 11:46:26 by amecani           #+#    #+#             */
-/*   Updated: 2025/01/01 16:32:28 by merdal           ###   ########.fr       */
+/*   Created: 2024/12/06 11:46:26 by merdal            #+#    #+#             */
+/*   Updated: 2025/01/02 16:26:42 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-// int	leaks(void)
-// {
-// 	return (system("leaks cub3D"));
-// }
-// 	atexit((void *)leaks);
-
-
-int main (int argc, char **argv)
+int	leaks(void)
 {
-	t_game game;
+	return (system("leaks cub3D"));
+}
 
-	if (argc != 2)
-	{
-		printf("Wrong number of arguments!\nUsage: ./cub3d + map.cub");
-		exit(1);
-	}
+int	main(int argc, char **argv)
+{
+	t_game	game;
+
+	atexit((void *)leaks);
+	if (check_param(argc, argv))
+		return (1);
 	parser(&game, argv[1]);
-
-	free_game(&game);
+	run_game(&game);
 	return (0);
 }
