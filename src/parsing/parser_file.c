@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: disilva <disilva@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:49:47 by merdal            #+#    #+#             */
-/*   Updated: 2025/01/02 12:25:09 by merdal           ###   ########.fr       */
+/*   Updated: 2025/01/04 12:19:38 by disilva          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	file_info_3(t_game *game, char **file, t_parse *p)
 	trimmed = trim_spaces(file[p->i]);
 	if (ft_strncmp(trimmed, "F", 1) == 0)
 	{
-		get_color(game, trimmed);
+		get_color(game, trimmed, file);
 		p->found_2 = 1;
 		(p->found)++;
 	}
 	else if (ft_strncmp(trimmed, "C", 1) == 0)
 	{
-		get_color(game, trimmed);
+		get_color(game, trimmed, file);
 		p->found_2 = 1;
 		(p->found)++;
 	}
@@ -80,6 +80,7 @@ void	file_info(t_game *game, char **file)
 
 	p.i = 0;
 	p.found = 0;
+	initialize_vaiables(game);
 	while (file[p.i])
 	{
 		p.found_2 = 0;
@@ -87,15 +88,15 @@ void	file_info(t_game *game, char **file)
 		file_info_3(game, file, &p);
 		if (p.found_2 == 0 && check_map(file[p.i]))
 		{
-			game->map = get_map(file, p.i);
+			get_map(file, p.i, game);
 			p.found++;
 			break ;
 		}
 		else if (p.found_2 == 0 && file[p.i][0] != '\0'
 			&& file[p.i][0] != '\t' && file[p.i][0] != ' ')
-			error_exit("Error: Unknown identifier!", 1);
+			error_exit_free("Error\nUnknown identifier!", 1, file, game);
 		p.i++;
 	}
 	if (p.found != 7)
-		error_exit("Error: not all identifiers", 1);
+		error_exit_free("Error\nincorrect num of identifiers", 1, file, game);
 }

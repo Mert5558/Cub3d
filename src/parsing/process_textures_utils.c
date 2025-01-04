@@ -6,7 +6,7 @@
 /*   By: disilva <disilva@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 23:42:58 by disilva           #+#    #+#             */
-/*   Updated: 2025/01/02 02:34:20 by disilva          ###   ########.fr       */
+/*   Updated: 2025/01/04 13:29:02 by disilva          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	skip_empty_spaces(int *i, char *line)
 {
-	while (line[(*i)] == ' ' || line[(*i)] == '	')
+	while (line[(*i)] == ' ' || line[(*i)] == '\t')
 		(*i)++;
 	return (*i);
 }
@@ -54,4 +54,10 @@ int	check_png_ending(char *path, int i)
 		return (10);
 	}
 	return (1);
+}
+
+void	bad_char(t_map *map, int j, t_game *game)
+{
+	map->grid[j + 1] = NULL;
+	error_exit_free("Error\nbad char in map!", 1, NULL, game);
 }

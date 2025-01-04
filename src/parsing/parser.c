@@ -6,7 +6,7 @@
 /*   By: disilva <disilva@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 11:57:31 by merdal            #+#    #+#             */
-/*   Updated: 2025/01/02 02:32:40 by disilva          ###   ########.fr       */
+/*   Updated: 2025/01/04 01:20:25 by disilva          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**read_file_line(char **file, int lines, int fd)
 				free(file[--i]);
 			free(file);
 			close(fd);
-			error_exit("Error GNl!", 1);
+			error_exit("Error\nGNl!", 1);
 		}
 		newline_pos = ft_strchr(file[i], '\n');
 		if (newline_pos)
@@ -71,16 +71,16 @@ char	**readfile(char *input_file)
 
 	lines = count_lines(input_file);
 	if (lines == -1)
-		error_exit("Error opening map file!", 1);
+		error_exit("Error\nopening map file!", 1);
 	fd = open(input_file, O_RDONLY);
 	if (fd == -1)
 	{
 		close(fd);
-		error_exit("Error opening map file!", 1);
+		error_exit("Error\nopening map file!", 1);
 	}
 	file = malloc(sizeof(char *) * (lines + 1));
 	if (!file)
-		error_exit("Error alloc for file!", 1);
+		error_exit("Error\nalloc for file!", 1);
 	file = read_file_line(file, lines, fd);
 	return (file);
 }

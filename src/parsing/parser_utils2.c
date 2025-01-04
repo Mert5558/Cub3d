@@ -6,7 +6,7 @@
 /*   By: disilva <disilva@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:26:37 by merdal            #+#    #+#             */
-/*   Updated: 2025/01/01 22:04:47 by disilva          ###   ########.fr       */
+/*   Updated: 2025/01/04 11:22:53 by disilva          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,55 +28,41 @@ void	free_map(t_map *map)
 	}
 }
 
-// void	free_texture(t_texture *texture)
-// {
-// 	int	i;
-
-// 	if (texture->grid)
-// 	{
-// 		i = 0;
-// 		while (i < texture->height)
-// 		{
-// 			free(texture->grid[i]);
-// 			i++;
-// 		}
-// 		free(texture->grid);
-// 	}
-// }
-
-// void	free_game(t_game *game)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < 4)
-// 	{
-// 		free_texture(&game->textures[i]);
-// 		i++;
-// 	}
-// 	free_map(&game->map);
-// }
-
 void	free_textures(t_game *data)
 {
 	if (data->pic.n_texture.path != NULL)
+	{
 		free (data->pic.n_texture.path);
+		data->pic.n_texture.path = NULL;
+	}
 	if (data->pic.s_texture.path != NULL)
+	{
 		free (data->pic.s_texture.path);
+		data->pic.s_texture.path = NULL;
+	}
 	if (data->pic.w_texture.path != NULL)
+	{
 		free (data->pic.w_texture.path);
+		data->pic.w_texture.path = NULL;
+	}
 	if (data->pic.e_texture.path != NULL)
+	{
 		free (data->pic.e_texture.path);
+		data->pic.e_texture.path = NULL;
+	}
 }
 
 void	free_map2(t_game *data, int i)
 {
-	while (i > 0)
+	if (data->map.grid)
 	{
-		i--;
-		free (data->map.grid[i]);
+		while (i > 0)
+		{
+			i--;
+			free (data->map.grid[i]);
+		}
+		free (data->map.grid);
 	}
-	free (data->map.grid);
 }
 
 void	player_position(t_map *map, int x, int j)

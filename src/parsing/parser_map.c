@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: disilva <disilva@student.42.fr>            +#+  +:+       +#+        */
+/*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 11:46:24 by merdal            #+#    #+#             */
-/*   Updated: 2025/01/02 02:33:57 by disilva          ###   ########.fr       */
+/*   Updated: 2025/01/04 14:04:41 by merdal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	map_max_height(char **file, int i)
 	return (len);
 }
 
-void	fill_grid_line(t_map *map, char *row, int j)
+void	fill_grid_line(t_map *map, char *row, int j, t_game *game)
 {
 	int	x;
 
@@ -68,7 +68,10 @@ void	fill_grid_line(t_map *map, char *row, int j)
 			else if ((row[x] == '0' || row[x] == '1' || row[x] == '2'))
 				map->grid[j][x] = row[x];
 			else
-				error_exit_free("Error: unexpected char in map!", 1, map->grid);
+			{
+				printf("----------------%c-----\n", row[x]);
+				bad_char(map, j, game);
+			}
 		}
 		else
 			map->grid[j][x] = '2';
@@ -76,42 +79,41 @@ void	fill_grid_line(t_map *map, char *row, int j)
 	}
 }
 
-int	assign_map(t_map *map, char **file, int i)
+int	assign_map(t_map *map, char **file, int i, t_game *game)
 {
 	int	j;
 
 	j = 0;
 	while (file[i] && file[i][0] != '\0')
 	{
-		map->grid[j] = ft_calloc(map->width + 1, sizeof(char));
+		map->grid[j] = NULL;
+		map->grid[j] = malloc((map->width + 1) * sizeof(char));
 		if (!map->grid[j])
 			return (-1);
-		fill_grid_line(map, file[i], j);
+		fill_grid_line(map, file[i], j, game);
 		j++;
 		i++;
 	}
+	map->grid[j] = NULL;
 	return (0);
 }
 
-t_map	get_map(char **file, int i)
+void	get_map(char **file, int i, t_game *game)
 {
-	t_map	map;
-
-	map.player_num = 0;
-	map.width = map_max_width(file, i);
-	map.height = map_max_height(file, i);
-	map.grid = ft_calloc(map.height + 1, sizeof(char *));
-	if (!map.grid)
-		error_exit_free("Error: failed allocation!", 1, map.grid);
-	if (map_space(&map, file, i))
-		error_exit_free("Error: empty line in map!", 1, map.grid);
-	if (assign_map(&map, file, i) == -1)
-		error_exit_free("Error: failed to extract map!", 1, map.grid);
-	if (map.player_num > 1)
-		error_exit_free("Error: map has more than one player", 1, map.grid);
-	if (map.player_num < 1)
-		error_exit_free("Error: map has no player", 1, map.grid);
-	if (check_map_wall(&map) == -1)
-		error_exit_free("Error: map is not closed by walls", 1, map.grid);
-	return (map);
+	game->map.player_num = 0;
+	game->map.width = map_max_width(file, i);
+	game->map.height = map_max_height(file, i);
+	if (map_space(&game->map, file, i))
+		error_exit_free("Error\nempty line in map!", 1, file, game);
+	game->map.grid = malloc((game->map.height + 1) * sizeof(char *));
+	if (!game->map.grid)
+		error_exit_free("Error\nfailed allocation!", 1, file, game);
+	if (assign_map(&game->map, file, i, game) == -1)
+		error_exit_free("Error\nfailed to extract map!", 1, file, game);
+	if (game->map.player_num > 1)
+		error_exit_free("Error\nmap has more than one player", 1, file, game);
+	if (game->map.player_num < 1)
+		error_exit_free("Error\nmap has no player", 1, file, game);
+	if (check_map_wall(&game->map) == -1)
+		error_exit_free("Error\nmap is not closed by walls", 1, file, game);
 }

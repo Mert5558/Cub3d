@@ -6,7 +6,7 @@
 /*   By: disilva <disilva@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 13:58:03 by merdal            #+#    #+#             */
-/*   Updated: 2025/01/01 22:20:06 by disilva          ###   ########.fr       */
+/*   Updated: 2025/01/04 08:27:59 by disilva          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,20 @@ int	parse_color(char *str, t_color *color)
 	return (0);
 }
 
-void	get_color(t_game *game, char *file_str)
+void	get_color(t_game *game, char *file_str, char **file)
 {
 	char	*color_str;
 
 	color_str = get_path(file_str);
+	if (!color_str)
+		error_exit_free("Error\nfail to allocate memory", 1, file, game);
 	if (ft_strncmp(file_str, "F", 1) == 0)
 	{
 		if (parse_color(color_str, &game->pic.floor_color) == -1)
 		{
 			free(color_str);
-			error_exit("Error: failed to parse floor color", 1);
+			error_exit_free("Error\nfailed to parse floor color",
+				1, file, game);
 		}
 	}
 	else if (ft_strncmp(file_str, "C", 1) == 0)
@@ -97,7 +100,8 @@ void	get_color(t_game *game, char *file_str)
 		if (parse_color(color_str, &game->pic.celing_color) == -1)
 		{
 			free(color_str);
-			error_exit("Error: failed to parse ceiling color", 1);
+			error_exit_free("Error\nfailed to parse celling color",
+				1, file, game);
 		}
 	}
 	free(color_str);

@@ -6,7 +6,7 @@
 /*   By: disilva <disilva@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 17:09:54 by disilva           #+#    #+#             */
-/*   Updated: 2024/12/31 20:55:44 by disilva          ###   ########.fr       */
+/*   Updated: 2025/01/04 12:10:33 by disilva          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,13 @@ int	check_param(int argc, char **argv)
 		return (1);
 	}
 	return (0);
+}
+
+void	initialize_vaiables(t_game *game)
+{
+	game->pic.n_texture.path = NULL;
+	game->pic.s_texture.path = NULL;
+	game->pic.e_texture.path = NULL;
+	game->pic.w_texture.path = NULL;
+	game->map.grid = NULL;
 }

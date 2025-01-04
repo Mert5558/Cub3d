@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calculate_rays.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: disilva <disilva@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 21:37:28 by disilva           #+#    #+#             */
-/*   Updated: 2025/01/02 12:46:07 by merdal           ###   ########.fr       */
+/*   Updated: 2025/01/04 08:44:25 by disilva          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	calculate_camera_plane_length(t_game *data)
 
 void	run_game(t_game *data)
 {
-	data->mlx = mlx_init(WINDOW_WIDTH, WINDOW_LENGTH, "cub3D", true);
-	ft_mlx_error(*data);
+	data->mlx = mlx_init(WINDOW_WIDTH, WINDOW_LENGTH, "cub3D", false);
+	ft_mlx_error(data);
 	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_LENGTH);
-	ft_img_error(*data);
+	ft_img_error(data);
 	mlx_key_hook(data->mlx, esc_hook, data);
 	mlx_close_hook(data->mlx, close_window_hook, data);
 	mlx_loop_hook(data->mlx, check_movement, data);
@@ -34,6 +34,7 @@ void	run_game(t_game *data)
 	convert_textures(data);
 	get_color2(data);
 	draw_image(data);
+	mlx_image_to_window(data->mlx, data->img, 0, 0);
 	mlx_loop(data->mlx);
 }
 
@@ -53,7 +54,6 @@ void	draw_image(t_game *data)
 		draw_column(data, window_column);
 		window_column++;
 	}
-	mlx_image_to_window(data->mlx, data->img, 0, 0);
 }
 
 void	ray_vector(int window_column, t_game *data)
