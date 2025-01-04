@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merdal <merdal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: disilva <disilva@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 12:03:59 by merdal            #+#    #+#             */
-/*   Updated: 2025/01/02 15:03:50 by merdal           ###   ########.fr       */
+/*   Updated: 2025/01/04 13:32:33 by disilva          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,17 +124,16 @@ typedef struct s_game
 	t_image_info	image_info;
 }	t_game;
 
-//-----------------Parsing-----------------
 void	parser(t_game *game, char *input_file);
 void	file_info(t_game *game, char **file);
 char	*get_path(char *str);
-void	get_color(t_game *game, char *file_str);
+void	get_color(t_game *game, char *file_str, char **file);
 int		check_map(char *file_str);
-t_map	get_map(char **file, int i);
+void	get_map(char **file, int i, t_game *game);
 int		check_map_wall(t_map *map);
 char	*get_path(char *str);
 void	error_exit(char *str, int exit_num);
-void	error_exit_free(char *str, int exit_num, char **array);
+void	error_exit_free(char *str, int exit_num, char **array, t_game *game);
 void	free_char_array(char **array);
 void	free_game(t_game *game);
 int		map_space(t_map *map, char **file, int i);
@@ -149,8 +148,8 @@ void	esc_hook(mlx_key_data_t key, void *param);
 void	check_movement(void *_data);
 void	get_color2(t_game *data);
 void	run_game(t_game *data);
-void	ft_mlx_error(t_game data);
-void	ft_img_error(t_game data);
+void	ft_mlx_error(t_game *data);
+void	ft_img_error(t_game *data);
 void	convert_textures(t_game *data);
 void	set_background(t_game *data);
 void	draw_column(t_game *data, int x_cord);
@@ -169,4 +168,7 @@ int		skip_empty_spaces(int *i, char *line);
 int		str_end_pos(char *str);
 int		check_png_ending(char *path, int i);
 void	close_window_hook(void *param);
+bool	fps_control(void);
+void	initialize_vaiables(t_game *game);
+void	bad_char(t_map *map, int j, t_game *game);
 #endif
