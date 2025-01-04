@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: disilva <disilva@student.42.fr>            +#+  +:+       +#+         #
+#    By: merdal <merdal@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/06 11:49:16 by amecani           #+#    #+#              #
-#    Updated: 2025/01/02 00:44:02 by disilva          ###   ########.fr        #
+#    Created: 2024/12/06 11:49:16 by disilva           #+#    #+#              #
+#    Updated: 2025/01/04 13:54:06 by merdal           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 NAME = cub3D
 
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -g -fsanitize=address -Wall -Wextra -Werror
 MLX_FLAGS = -ldl -lglfw -pthread -lm 
 LIBFT = includes/libft/libft.a
 GNL = includes/GetNextLine/GNL.a
