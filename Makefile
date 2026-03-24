@@ -40,7 +40,12 @@ all: $(NAME)
 $(LIBFT):
 	@make -C includes/Libft
 
-$(NAME): $(MLX) $(OBJS) $(LIBFT)
+init-submodules:
+	@if [ ! -d "includes/Libft/.git" ]; then \
+		git submodule update --init --recursive; \
+	fi
+
+$(NAME): init-submodules $(MLX) $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJS) $(MLX) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
 
 $(MLX):
@@ -63,4 +68,4 @@ rmlx42:
 
 re: fclean all
 
-.PHONY: all clean fclean re rmlx42
+.PHONY: all clean fclean re rmlx42 init-submodules
