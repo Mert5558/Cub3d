@@ -13,8 +13,8 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "libft/libft.h"
-# include "GetNextLine/get_next_line.h"
+# include <libft.h>
+# include <get_next_line.h>
 # include "../MLX42/include/MLX42/MLX42.h"
 # include <stdio.h>
 # include <unistd.h>
@@ -129,7 +129,7 @@ void	file_info(t_game *game, char **file);
 char	*get_path(char *str);
 void	get_color(t_game *game, char *file_str, char **file);
 int		check_map(char *file_str);
-void	get_map(char **file, int i, t_game *game);
+t_map	get_map(char **file, int i, t_game *game);
 int		check_map_wall(t_map *map);
 char	*get_path(char *str);
 void	error_exit(char *str, int exit_num);

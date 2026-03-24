@@ -15,12 +15,13 @@
 NAME = cub3D
 
 CC = cc
-CFLAGS = -g -fsanitize=address -Wall -Wextra -Werror
+INCLUDE = -I./includes/Libft/src -I./includes/get_next_line/src -I./includes -I./MLX42
+CFLAGS = -g -fsanitize=address -Wall -Wextra -Werror $(INCLUDE)
 MLX_FLAGS = -ldl -lglfw -pthread -lm 
-LIBFT = includes/libft/libft.a
-GNL = includes/GetNextLine/GNL.a
+LIBFT = includes/Libft/libft.a
 
 SRCS = src/main.c src/parsing/parser.c src/parsing/parser_file.c src/parsing/parser_map.c\
+	   includes/get_next_line/src/get_next_line.c includes/get_next_line/src/get_next_line_utils.c\
 	   src/parsing/parser_utils.c src/parsing/parser_utils2.c src/parsing/parser_map_utils.c src/parsing/process_textures.c\
 		src/execution/calculate_rays.c src/execution/errors.c src/execution/keys.c \
         src/execution/movement.c src/execution/image.c src/parsing/check_params.c \
@@ -33,18 +34,14 @@ MLX_URL = https://github.com/codam-coding-college/MLX42.git
 MLX_PATH = ./MLX42/build
 MLX = $(MLX_PATH)/libmlx42.a
 MLX = ./MLX42/build/libmlx42.a
-INCLUDE = -I./includes/libft -I./includes -I./MLX42
 
 all: $(NAME)
 
 $(LIBFT):
-	@make -C includes/libft
+	@make -C includes/Libft
 
-$(GNL):
-	@make -C includes/GetNextLine
-
-$(NAME): $(MLX) $(OBJS) $(LIBFT) $(GNL)
-	@$(CC) $(CFLAGS) $(MLX) $(MLX_FLAGS) $(LIBFT) $(GNL) $(OBJS) -o $(NAME) $(INCLUDE)
+$(NAME): $(MLX) $(OBJS) $(LIBFT)
+	@$(CC) $(CFLAGS) $(OBJS) $(MLX) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
 
 $(MLX):
 	@if [ ! -d "MLX42" ]; then \
@@ -53,13 +50,11 @@ $(MLX):
 	fi
 
 clean :
-	@make -C includes/libft clean
-	@make -C includes/GetNextLine clean
+	@make -C includes/Libft clean
 	@rm -rf $(OBJS)
 
 fclean: clean
-	@make -C includes/libft fclean
-	@make -C includes/GetNextLine fclean
+	@make -C includes/Libft fclean
 	@rm -rf $(OBJECTS)
 	@rm -rf $(NAME)
 

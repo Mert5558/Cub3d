@@ -88,7 +88,7 @@ void	file_info(t_game *game, char **file)
 		file_info_3(game, file, &p);
 		if (p.found_2 == 0 && check_map(file[p.i]))
 		{
-			get_map(file, p.i, game);
+			game->map = get_map(file, p.i, game);
 			p.found++;
 			break ;
 		}

@@ -47,7 +47,7 @@ int	map_max_height(char **file, int i)
 	return (len);
 }
 
-void	fill_grid_line(t_map *map, char *row, int j)
+void	fill_grid_line(t_map *map, char *row, int j, t_game *game)
 {
 	int	x;
 
@@ -68,7 +68,7 @@ void	fill_grid_line(t_map *map, char *row, int j)
 			else if ((row[x] == '0' || row[x] == '1' || row[x] == '2'))
 				map->grid[j][x] = row[x];
 			else
-				error_exit_free("Error: unexpected char in map!", 1, map->grid);
+				error_exit_free("Error: unexpected char in map!", 1, map->grid, game);
 		}
 		else
 			map->grid[j][x] = '2';
@@ -76,7 +76,7 @@ void	fill_grid_line(t_map *map, char *row, int j)
 	}
 }
 
-int	assign_map(t_map *map, char **file, int i)
+int	assign_map(t_map *map, char **file, int i, t_game *game)
 {
 	int	j;
 
@@ -86,14 +86,14 @@ int	assign_map(t_map *map, char **file, int i)
 		map->grid[j] = ft_calloc(map->width + 1, sizeof(char));
 		if (!map->grid[j])
 			return (-1);
-		fill_grid_line(map, file[i], j);
+		fill_grid_line(map, file[i], j, game);
 		j++;
 		i++;
 	}
 	return (0);
 }
 
-t_map	get_map(char **file, int i)
+t_map	get_map(char **file, int i, t_game *game)
 {
 	t_map	map;
 
@@ -102,16 +102,16 @@ t_map	get_map(char **file, int i)
 	map.height = map_max_height(file, i);
 	map.grid = ft_calloc(map.height + 1, sizeof(char *));
 	if (!map.grid)
-		error_exit_free("Error: failed allocation!", 1, map.grid);
+		error_exit_free("Error: failed allocation!", 1, map.grid, game);
 	if (map_space(&map, file, i))
-		error_exit_free("Error: empty line in map!", 1, map.grid);
-	if (assign_map(&map, file, i) == -1)
-		error_exit_free("Error: failed to extract map!", 1, map.grid);
+		error_exit_free("Error: empty line in map!", 1, map.grid, game);
+	if (assign_map(&map, file, i, game) == -1)
+		error_exit_free("Error: failed to extract map!", 1, map.grid, game);
 	if (map.player_num > 1)
-		error_exit_free("Error: map has more than one player", 1, map.grid);
+		error_exit_free("Error: map has more than one player", 1, map.grid, game);
 	if (map.player_num < 1)
-		error_exit_free("Error: map has no player", 1, map.grid);
+		error_exit_free("Error: map has no player", 1, map.grid, game);
 	if (check_map_wall(&map) == -1)
-		error_exit_free("Error: map is not closed by walls", 1, map.grid);
+		error_exit_free("Error: map is not closed by walls", 1, map.grid, game);
 	return (map);
 }
